@@ -59,6 +59,22 @@ This SQL script sets up the `OrderManagementDB` database schema and seeds initia
 - Swagger / Swashbuckle  
 - IMemoryCache  
 ---
+## Sample Request & Response
+### Request
+bash
+curl -X 'POST' \
+  'https://localhost:7112/api/Orders/create?customerId=1&baseAmount=20' \
+  -H 'accept: */*' \
+  -d ''
+  ### Response
+  {
+  "id": 15,
+  "customerId": 1,
+  "totalAmount": 20,
+  "createdAt": "2025-05-30T12:17:01.3583804Z",
+  "status": "Pending"
+}
+
 ## Testing
 ### ✅ Unit Tests
 Unit tests are written using **xUnit** and cover:
