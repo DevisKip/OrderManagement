@@ -29,24 +29,25 @@ This project is a RESTful API built using **ASP.NET Core 8 Web API** and **Entit
   All database operations are `async` to improve performance under load and ensure scalability.
 
 ---
-##Assumptions
--Customer segments and discount logic are hardcoded for simplicity.
--Database is pre-seeded or connected to a persistent store for testing.
--Status enum controls valid order transitions.
--OrderService.UpdateStatus enforces transition rules.
+
+## Assumptions
+- Customer segments and discount logic are hardcoded for simplicity
+- Database is pre-seeded or connected to a persistent store for testing
+- Status enum controls valid order transitions
+- OrderService.UpdateStatus enforces transition rules 
 ---
-##API Endpoints
-Method	Endpoint	Description
-POST	/api/orders/create	Creates an order with discount
-PATCH		/api/orders/{id}/status	Updates order status
-GET	/api/orders/analytics	order analytics with caching
+## API Endpoints
+ Method	    Endpoint	                 Description
+- POST	   /api/orders/create	       Creates an order with discount
+- PATCH	   /api/orders/{id}/status	 Updates order status
+- GET	     /api/orders/analytics	   order analytics with caching 
 ---
-Tools & Frameworks
--ASP.NET Core 8
--Entity Framework Core
--xUnit
--Swagger / Swashbuckle
--IMemoryCache
+## Tools & Frameworks
+- ASP.NET Core 8
+- Entity Framework Core
+- xUnit
+- Swagger / Swashbuckle
+- IMemoryCache 
 ---
 ## Testing
 
