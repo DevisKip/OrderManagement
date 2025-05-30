@@ -2,41 +2,68 @@
 using OrderManagement.Models;
 using OrderManagement.Services;
 using Xunit;
+using System.Collections.Generic;
 
 namespace OrderManagement.UnitTests.Model
 {
+
     public class DiscountServiceTests
     {
         private readonly DiscountService _discountService = new();
 
         [Fact]
-        public void VIP_Customer_Gets_20_Percent_Discount()
-        {
-            var customer = new Customer
-            {
-                Segment = CustomerSegment.VIP,
-                Orders = new List<Order>()
-            };
-
-            var result = _discountService.ApplyDiscount(customer, 100m);
-            Assert.Equal(80m, result);
-        }
-
-        [Fact]
-        public void Premium_Customer_With_More_Than_3_Orders_Gets_15_Percent_Discount()
+        public void PremiumCustomer_WithMoreThan3Orders_Gets5PercentDiscount()
         {
             var customer = new Customer
             {
                 Segment = CustomerSegment.Premium,
-                Orders = new List<Order> { new(), new(), new(), new() }
+                Orders = new List<Order> { new(), new(), new(), new() } // 4 orders
             };
 
-            var result = _discountService.ApplyDiscount(customer, 200m);
-            Assert.Equal(170m, result);
+            decimal baseAmount = 100m;
+            decimal expected = 95m;
+
+            var actual = _discountService.ApplyDiscount(customer, baseAmount);
+
+            Assert.Equal(expected, actual);
         }
 
         [Fact]
-        public void Regular_Customer_Gets_No_Discount()
+        public void PremiumCustomer_With3OrFewerOrders_GetsNoDiscount()
+        {
+            var customer = new Customer
+            {
+                Segment = CustomerSegment.Premium,
+                Orders = new List<Order> { new(), new(), new() } // exactly 3 orders
+            };
+
+            decimal baseAmount = 100m;
+            decimal expected = 100m;
+
+            var actual = _discountService.ApplyDiscount(customer, baseAmount);
+
+            Assert.Equal(expected, actual);
+        }
+
+        [Fact]
+        public void VIPCustomer_AlwaysGets10PercentDiscount()
+        {
+            var customer = new Customer
+            {
+                Segment = CustomerSegment.VIP,
+                Orders = new List<Order>() // number of orders doesn’t matter for VIP
+            };
+
+            decimal baseAmount = 100m;
+            decimal expected = 90m;
+
+            var actual = _discountService.ApplyDiscount(customer, baseAmount);
+
+            Assert.Equal(expected, actual);
+        }
+
+        [Fact]
+        public void StandardCustomer_GetsNoDiscount()
         {
             var customer = new Customer
             {
@@ -44,9 +71,12 @@ namespace OrderManagement.UnitTests.Model
                 Orders = new List<Order>()
             };
 
-            var result = _discountService.ApplyDiscount(customer, 50m);
-            Assert.Equal(50m, result);
+            decimal baseAmount = 100m;
+            decimal expected = 100m;
+
+            var actual = _discountService.ApplyDiscount(customer, baseAmount);
+
+            Assert.Equal(expected, actual);
         }
     }
-
 }

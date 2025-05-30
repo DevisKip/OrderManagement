@@ -8,7 +8,7 @@ namespace OrderManagement.Services
         {
             return customer.Segment switch
             {
-                CustomerSegment.Premium when customer.Orders.Count > 5 => amount * 0.95m,
+                CustomerSegment.Premium when customer.Orders.Count > 3 => amount * 0.95m,
                 CustomerSegment.VIP => amount * 0.90m,
                 _ => amount
             };
